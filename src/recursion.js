@@ -155,11 +155,25 @@ var reverse = function(string) {
   if(string.length === 0) {
     return string;
   }
-
+  //add last element first to new string
+  return reverse(string.slice(1)) + string.charAt(0);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  //base case: if string length = 0
+  string = string.toLowerCase();
+  if (string.length <= 1) {
+    return true;
+  }
+    var firstLetter = string[0];
+    var lastLetter = string[string.length-1];
+    if(firstLetter === lastLetter) {
+      var stringWithOutFirstAndLast = string.substring(1, string.length-1);
+    return palindrome(stringWithOutFirstAndLast);
+  } else {
+    return false;
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -234,6 +248,22 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  //create variable sum;
+  var num = 0;
+
+  //iterate through obj
+  var num = 0;
+  for (var prop in obj) {
+    if (prop === key) {
+      num++;
+    }
+    var value = obj[prop];
+    if (typeof value === 'object') {
+      num += countKeysInObj(value, key);
+    }
+  }
+  return num;
+
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
@@ -241,11 +271,23 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+  var num = 0;
+  for(var key in obj) {
+    if(obj[key] === value) {
+      num ++;
+    }
+    if(typeof obj[key] === 'object') {
+      num += countValuesInObj(obj[key], value);
+    }
+  }
+  return num;
+
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
